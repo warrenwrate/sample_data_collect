@@ -1,8 +1,8 @@
 # Token Game Data
 ## Overview
 ### Purpose:
-The purpose of this project is to build a data warehouse to store the player and game related information for the popular 98point6 token (Drop Token).
-The tables and views buit should give an analyst an intuitive way to pull and anyalyse the data being stored.
+The purpose of this project is to build a data warehouse to store the player and game related information for the popular 98point6 token game (Drop Token).
+The tables and views built should give an analyst an intuitive way to pull and anyalyse the data being stored.
 
 ### Technologies Used
 1. Python 3.6
@@ -16,26 +16,26 @@ Special Modules that may need installing...
 ### Tables
 1. **players** - this is the data gathered by the REST API given.
 2. **games** - the games data was produced, to evaluate each game by (win,loss, or draw), players, last move and player that conducted the last move.
-3. **game_details** - the games detail is the complet gaming details.
+3. **game_details** - is the complete gaming details from the csv.
 
 ### Views
 1. **all_games_by_player** - this is a union created from the games table using player1 and player2 to get all games played by each player.
-2. **player_info** - the player info table is an add-on view on top of all_games_by_player view to count the total games, wins, losses, and draws by player.
-3. **column_win_prob_move_one** - this view is a join between the games and game_details table, which partitions the count of column numbers and total overall count.
+2. **player_info** - the player info table is an add-on view on top of **all_games_by_player view** to count the total games, wins, losses, and draws by player.
+3. **column_win_prob_move_one** - this view is a join between the **games** and **game_details** table, which partitions the count of column numbers and total overall count.
    ..* Then I divide the totals to give me a perecentage of how each column may have given a slight advantage.
 
 
 ## Setting up the Project
-The first item is to set up the config file.
+The first item is to set up the [config file](https://github.com/warrenwrate/token_project/blob/master/pythonproj/configdata.cfg).
 This is a way to set the variables once, and not have the need to it again.
 set the **host**, **database**, **username**, **password**, and **csv location**, **log file name & location**
 
 ##### To set up the database, please run postgreSQL scripts in the below order
-1. **players_table.sql** - creates the players table
-2. **games_table.sql** - creates the games table
-3. **gamesdetail_table.sql** - creates the game_details table
-4. **percentile_rank.sql** - this creates the column_win_prob_move_one view and has the query which is used for the first question.
-5. **playerviews.sql** - this creates the all_games_by_player view, has a query for question two, the creates the view to assist with the final question.
+1. **players_table.sql** - creates the **players** table
+2. **games_table.sql** - creates the **games** table
+3. **gamesdetail_table.sql** - creates the **game_details** table
+4. **percentile_rank.sql** - this creates the **column_win_prob_move_one** view and has the query which is used for the first question.
+5. **playerviews.sql** - this creates the **all_games_by_player** view, has a query for question two, the creates the **player_info** view to assist with the final question.
 
 
 ## Running the Project
@@ -45,9 +45,9 @@ python main.py
 ```
 #### Detail
 1. **main.py** - ties all of the functionality into one last module.
-2. **connections.py** - used to gather the connections, and then is referenced by other classes for logging and holding database connections
+2. **connections.py** - used to gather the connections, and then is inherited by other classes for logging and holding database connections.
 3. **loadplayer.py** - this is used to load the player data. 
-4. **loadgame.py** - runs a process to get the data that is used for the games table.
+4. **loadgame.py** - runs a process to get the data that is used for the **games** table.
 5. **loadgamedetails.py** - pulls the detailed game data from the csv to the database.
 6. **player.py** - this is a class that I created that helped me manage the player data.
 
