@@ -5,22 +5,22 @@ The purpose of this project is to build a data warehouse to store the player and
 The tables and views buit should give an analyst an intuitive way to pull and anyalyse the data being stored.
 
 ### Technologies Used
-1.Python 3.6
-2.PostgreSQL 10.0
+1. Python 3.6
+2. PostgreSQL 10.0
 ### Modules
 The scripts to load data into the system is done with Python 3.6
 Special Modules that may need installing
-1.**requests** - to pull data from the REST API
-2.**pyscopg2** - to connect to our PostgreSQL database
+1. **requests** - to pull data from the REST API
+2. **pyscopg2** - to connect to our PostgreSQL database
 
 ### Tables
-1.Players
-2.Games
-3.Games Details
+1. Players
+2. Games
+3. Games Details
 
 ### Views
-1.**all_games_by_player** - user to easly get the count of games by Nation
-2.**player_info** - main view to get detail of how may games were played
+1. **all_games_by_player** - user to easly get the count of games by Nation
+2. **player_info** - main view to get detail of how may games were played
 
 _*Note:* Further detail on thought process can be found under the postgresqlScripts folder's readme._
 
@@ -29,17 +29,17 @@ _*Note:* Further detail on thought process can be found under the postgresqlScri
 set the **host**, **database**, **username**, **password**, and **csv location**, **log file name & location**
 
 ##### To set up the database, please run postgreSQL scripts in the below order
-1.Players
-2.Games
-3.Game Details
+1. Players
+2. Games
+3. Game Details
 
-1.**column_win_prob_move_one** - this is to help get the probability of a win based on the column picked on the first move.
-2.**all_games_by_player** - used to easily get the count of the games by Nation
-3,**player_info** - main view to get detail of how many games were played won, lossed or drawn by a player
+1. **column_win_prob_move_one** - this is to help get the probability of a win based on the column picked on the first move.
+2. **all_games_by_player** - used to easily get the count of the games by Nation
+3. **player_info** - main view to get detail of how many games were played won, lossed or drawn by a player
 
 ## Running the Project
 To run the full project, run the "main" python file
-```
+```python
 python main.py
 ```
 *Note: "A lot more detail on the classes and processes can be found under the pythonProj folder's readme.*
@@ -69,18 +69,15 @@ order by count(*) desc
    lost, or drew the game. Which players should receive an email, and with what
    customization?
 ```sql
--- players ended on a draw with only playing one game
-select player, draw_count, total_count
-from player_info 
-where total_count = 1 and draw_count = 1
-
--- players ended on a loss with only playing one game
-select player, loss_count, total_count
-from player_info 
-where total_count = 1 and loss_count = 1
-
--- players ended on a win with only playing one game
-select player, win_count, total_count
-from player_info 
-where total_count = 1 and win_count = 1
+-- custom statments for players only game was a win, loss, or draw
+select 
+case when win_count = 1 then concat('hello ', p.firstname, ' ', p.lastname ,
+	'\nI get it...retiring as CHAMP!!\nTry playing again to add to your legacy!')
+	 when loss_count = 1 then concat('hello ', p.firstname, ' ', p.lastname ,
+	'\nLosing is no fun, but you need to try again.\nYou can do it! We BELIEVE!!!')
+	 when draw_count = 1 then concat('hello ', p.firstname, ' ', p.lastname ,
+	'\nLook out partner now... DRAW.\nBut that is not all you should do.  Please play again.') else 'uh oh no value' end custom_message
+from player_info p_info
+join players p on p_info.player = p.playerid
+where total_count = 1
 ```
