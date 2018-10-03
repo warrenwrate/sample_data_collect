@@ -14,9 +14,9 @@ Special Modules that may need installing...
 2. **pyscopg2** - to connect to our PostgreSQL database
 
 ### Tables
-1. players - this is the data gathered by the REST API given.
-2. games - the games data was produced, to evaluate each game by (win,loss, or draw), players, last move and player that conducted the last move.
-3. game_details - the games detail is the complet gaming details.
+1. **players** - this is the data gathered by the REST API given.
+2. **games** - the games data was produced, to evaluate each game by (win,loss, or draw), players, last move and player that conducted the last move.
+3. **game_details** - the games detail is the complet gaming details.
 
 ### Views
 1. **all_games_by_player** - this is a union created from the games table using player1 and player2 to get all games played by each player.
@@ -31,11 +31,11 @@ This is a way to set the variables once, and not have the need to it again.
 set the **host**, **database**, **username**, **password**, and **csv location**, **log file name & location**
 
 ##### To set up the database, please run postgreSQL scripts in the below order
-1. players_table.sql - creates the players table
-2. games_table.sql - creates the games table
-3. gamesdetail_table.sql - creates the game_details table
-4. percentile_rank.sql - this creates the column_win_prob_move_one view and has the query which is used for the first question.
-5. playerviews.sql - this creates the all_games_by_player view, has a query for question two, the creates the view to assist with the final question.
+1. **players_table.sql** - creates the players table
+2. **games_table.sql** - creates the games table
+3. **gamesdetail_table.sql** - creates the game_details table
+4. **percentile_rank.sql** - this creates the column_win_prob_move_one view and has the query which is used for the first question.
+5. **playerviews.sql** - this creates the all_games_by_player view, has a query for question two, the creates the view to assist with the final question.
 
 
 ## Running the Project
@@ -44,12 +44,12 @@ To run the full project, run the "main" python file
 python main.py
 ```
 #### Detail
-main.py - ties all of the functionality into one last module.
-connections.py - used to gather the connections, and then is referenced by other classes for logging and holding database connections
-loadplayer.py - this is used to load the player data. 
-loadgame.py - runs a process to get the data that is used for the games table.
-loadgamedetails.py - pulls the detailed game data from the csv to the database.
-player.py - this is a class that I created that helped me manage the player data.
+1. **main.py** - ties all of the functionality into one last module.
+2. **connections.py** - used to gather the connections, and then is referenced by other classes for logging and holding database connections
+3. **loadplayer.py** - this is used to load the player data. 
+4. **loadgame.py** - runs a process to get the data that is used for the games table.
+5. **loadgamedetails.py** - pulls the detailed game data from the csv to the database.
+6. **player.py** - this is a class that I created that helped me manage the player data.
 
 
 
