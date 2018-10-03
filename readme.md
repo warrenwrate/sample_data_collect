@@ -35,7 +35,7 @@ set the **host**, **database**, **username**, **password**, and **csv location**
 2. **games_table.sql** - creates the **games** table
 3. **gamesdetail_table.sql** - creates the **game_details** table
 4. **percentile_rank.sql** - this creates the **column_win_prob_move_one** view and has the query which is used for the first question.
-5. **playerviews.sql** - this creates the **all_games_by_player** view, has a query for question two, the creates the **player_info** view to assist with the final question.
+5. **playerviews.sql** - this creates the **all_games_by_player** view, has a query for question two, then creates the **player_info** view to assist with the final question.
 
 
 ## Running the Project
