@@ -23,7 +23,7 @@ from games
 -- most games by nation
 select p.nat, count(*) TotalCount
 from players as p
-join all_games_by_player as agp on p.playerid = agp.player
+join all_games_by_player as agp on p.player_id = agp.player
 group by p.nat
 order by count(*) desc
 
@@ -59,11 +59,11 @@ group by p.player, draw_count, win_count, loss_count
 -- custom statments for players only game was a win, loss, or draw
 select p.email,
 case when win_count = 1 then concat('hello ', p.firstname, ' ', p.lastname ,
-	'\nI get it...retiring as CHAMP!!\nTry playing again to add to your legacy!')
+	',\nI get it...retiring as CHAMP!!\nTry playing again to add to your legacy!')
 	 when loss_count = 1 then concat('hello ', p.firstname, ' ', p.lastname ,
-	'\nLosing is no fun, but you need to try again.\nYou can do it! We BELIEVE!!!')
+	',\nLosing is no fun, but you need to try again.\nYou can do it! We BELIEVE!!!')
 	 when draw_count = 1 then concat('hello ', p.firstname, ' ', p.lastname ,
-	'\nLook out partner now... DRAW.\nBut that is not all you should do.  Please play again.') else 'uh oh no value' end custom_message
+	',\nLook out partner now... DRAW.\nBut that is not all you should do.  Please play again.') else 'uh oh no value' end custom_message
 from player_info p_info
-join players p on p_info.player = p.playerid
+join players p on p_info.player = p.player_id
 where total_count = 1

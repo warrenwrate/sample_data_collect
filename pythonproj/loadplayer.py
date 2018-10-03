@@ -105,7 +105,7 @@ class Load_Player(Connections):
         try:
             sql = '''
             insert into players 
-            (playerid, firstname,	lastname,	title,	gender,	street,	city,	state,	postcode,	email,
+            (player_id, firstname,	lastname,	title,	gender,	street,	city,	state,	postcode,	email,
             dob,	phone,	cell,	nat,	registered,	largeimage,	mediumimage,	thumbnail,	id_name,	id_value)
 
             values ( %s, %s, %s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)

@@ -1,4 +1,5 @@
 
+-- drop view column_win_prob_move_one
 create view column_win_prob_move_one as
 
 select distinct gt.column_number,

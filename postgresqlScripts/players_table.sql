@@ -1,7 +1,8 @@
 
+--drop table players
 
 CREATE TABLE players (
-    playerid int PRIMARY key,
+    player_id text PRIMARY key,
     firstname text,
 	lastname text,
 	title text,
