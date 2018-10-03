@@ -1,7 +1,7 @@
 # Token Game Data
 ## Overview
 ### Purpose:
-The purpose of this project is to build a data warehouse to store the player and game related information for the popular 98point6 token (GameTokenName).
+The purpose of this project is to build a data warehouse to store the player and game related information for the popular 98point6 token (Drop Token).
 The tables and views buit should give an analyst an intuitive way to pull and anyalyse the data being stored.
 
 ### Technologies Used
@@ -9,40 +9,51 @@ The tables and views buit should give an analyst an intuitive way to pull and an
 2. PostgreSQL 10.0
 ### Modules
 The scripts to load data into the system is done with Python 3.6
-Special Modules that may need installing
+Special Modules that may need installing...
 1. **requests** - to pull data from the REST API
 2. **pyscopg2** - to connect to our PostgreSQL database
 
 ### Tables
-1. Players
-2. Games
-3. Games Details
+1. players - this is the data gathered by the REST API given.
+2. games - the games data was produced, to evaluate each game by (win,loss, or draw), players, last move and player that conducted the last move.
+3. game_details - the games detail is the complet gaming details.
 
 ### Views
-1. **all_games_by_player** - user to easly get the count of games by Nation
-2. **player_info** - main view to get detail of how may games were played
+1. **all_games_by_player** - this is a union created from the games table using player1 and player2 to get all games played by each player.
+2. **player_info** - the player info table is an add-on view on top of all_games_by_player view to count the total games, wins, losses, and draws by player.
+3. **column_win_prob_move_one** - this view is a join between the games and game_details table, which partitions the count of column numbers and total overall count.
+   ..* Then I divide the totals to give me a perecentage of how each column may have given a slight advantage.
 
-_*Note:* Further detail on thought process can be found under the postgresqlScripts folder's readme._
 
 ## Setting up the Project
-*Setting up config file*
+The first item is to set up the config file.
+This is a way to set the variables once, and not have the need to it again.
 set the **host**, **database**, **username**, **password**, and **csv location**, **log file name & location**
 
 ##### To set up the database, please run postgreSQL scripts in the below order
-1. Players
-2. Games
-3. Game Details
+1. players_table.sql - creates the players table
+2. games_table.sql - creates the games table
+3. gamesdetail_table.sql - creates the game_details table
+4. percentile_rank.sql - this creates the column_win_prob_move_one view and has the query which is used for the first question.
+5. playerviews.sql - this creates the all_games_by_player view, has a query for question two, the creates the view to assist with the final question.
 
-1. **column_win_prob_move_one** - this is to help get the probability of a win based on the column picked on the first move.
-2. **all_games_by_player** - used to easily get the count of the games by Nation
-3. **player_info** - main view to get detail of how many games were played won, lossed or drawn by a player
 
 ## Running the Project
 To run the full project, run the "main" python file
 ```python
 python main.py
 ```
-*Note: "A lot more detail on the classes and processes can be found under the pythonProj folder's readme.*
+#### Detail
+main.py - ties all of the functionality into one last module.
+connections.py - used to gather the connections, and then is referenced by other classes for logging and holding database connections
+loadplayer.py - this is used to load the player data. 
+loadgame.py - runs a process to get the data that is used for the games table.
+loadgamedetails.py - pulls the detailed game data from the csv to the database.
+player.py - this is a class that I created that helped me manage the player data.
+
+
+
+## Questions and Querable Answers
 
 1. Out of all the games, what is the percentile rank of each column used as the
    first move in a game? That is, when the first player is choosing a column
@@ -69,8 +80,7 @@ order by count(*) desc
    lost, or drew the game. Which players should receive an email, and with what
    customization?
 ```sql
--- custom statments for players only game was a win, loss, or draw
-select 
+select p.email,
 case when win_count = 1 then concat('hello ', p.firstname, ' ', p.lastname ,
 	'\nI get it...retiring as CHAMP!!\nTry playing again to add to your legacy!')
 	 when loss_count = 1 then concat('hello ', p.firstname, ' ', p.lastname ,
