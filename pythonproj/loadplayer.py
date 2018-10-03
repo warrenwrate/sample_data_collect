@@ -96,7 +96,8 @@ class Load_Player(Connections):
             self.create_player(player, jdata)
             #print("**running test on playerid {}**".format(player.playerid))
             msg = player.checkvalues()
-            self.logger.warning(msg)
+            if msg:
+                self.logger.warning(msg.encode("utf-8"))
             self.add_to_db(player)
         #print(player.first, player.last, player.playerid, player.dob)
 
@@ -119,7 +120,7 @@ class Load_Player(Connections):
             self.conn.commit()
 
         except (Exception, psycopg2.DatabaseError) as error:
-            self.logger.error(error)
+            self.logger.error("data commit error of {}".format(error))
         
     def run(self):
         self.logger.info("Starting the process to load players")
@@ -129,3 +130,5 @@ class Load_Player(Connections):
         self.conn.close()
         self.logger.info("Finished the process in {} seconds".format(end - start))
 
+#lp = Load_Player()
+#lp.run()
