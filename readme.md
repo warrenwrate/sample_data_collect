@@ -44,7 +44,6 @@ python main.py
 ```
 *Note: "A lot more detail on the classes and processes can be found under the pythonProj folder's readme.*
 
-
 1. Out of all the games, what is the percentile rank of each column used as the
    first move in a game? That is, when the first player is choosing a column
    for their first move, which column most frequently leads to that player
@@ -57,9 +56,31 @@ FROM column_win_prob_move_one
 WINDOW win AS (ORDER BY column_number);
 ```
 2. How many games has each nationality participated in?
+```sql
+select p.nat, count(*) TotalCount
+from players as p
+join all_games_by_player as agp on p.playerid = agp.player
+group by p.nat
+order by count(*) desc
+```
 
 3. Marketing wants to send emails to players that have only played a single
    game. The email will be customized based on whether or not the player won,
    lost, or drew the game. Which players should receive an email, and with what
    customization?
+```sql
+-- players ended on a draw with only playing one game
+select player, draw_count, total_count
+from player_info 
+where total_count = 1 and draw_count = 1
 
+-- players ended on a loss with only playing one game
+select player, loss_count, total_count
+from player_info 
+where total_count = 1 and loss_count = 1
+
+-- players ended on a win with only playing one game
+select player, win_count, total_count
+from player_info 
+where total_count = 1 and win_count = 1
+```
