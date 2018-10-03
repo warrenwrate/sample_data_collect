@@ -27,8 +27,8 @@ Special Modules that may need installing...
 
 ## Setting up the Project
 The first item is to set up the [config file](https://github.com/warrenwrate/token_project/blob/master/pythonproj/configdata.cfg).
-This is a way to set the variables once, and not have the need to it again.
-set the **host**, **database**, **username**, **password**, and **csv location**, **log file name & location**
+This is a way to set the variables once, and not have the need to do it again.
+Set the **host**, **database**, **username**, **password**, and **csv location**, **log file name & location**
 
 ##### To set up the database, please run postgreSQL scripts in the below order
 1. **players_table.sql** - creates the **players** table
