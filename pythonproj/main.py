@@ -13,7 +13,8 @@ class Program(Connections):
         self.logger.info("loading players")
         print('loading players...')
         load_player.run()
-        #new way loading games
+        #new way loading games 
+        #I will need to adjust loadgameNgamedetails when handling larger datasets
         load_game = loadgameNgamedetails.Load_Game()
         self.logger.info("loading games")
         print('loading games...')
