@@ -1,6 +1,7 @@
 import loadgame
 import loadgamedetail
 import loadplayer
+import loadgameNgamedetails
 from connections import Connections
 
 class Program(Connections):
@@ -12,14 +13,23 @@ class Program(Connections):
         self.logger.info("loading players")
         print('loading players...')
         load_player.run()
+        #new way loading games
+        load_game = loadgameNgamedetails.Load_Game()
+        self.logger.info("loading games")
+        print('loading games...')
+        load_game.run_game_upload()
+        '''
+        # old way of up loading games and games detail
         load_game = loadgame.Load_Game()
         self.logger.info("loading games")
         print('loading games...')
         load_game.run_game_upload()
+
         self.logger.info("loading game details")
         print('loading games details...')
         load_game_detail = loadgamedetail.Load_Game_Detail()
         load_game_detail.run_game_upload()
+        '''
         self.logger.info("loading complete")
 
     def tables_exist(self):

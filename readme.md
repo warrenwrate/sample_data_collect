@@ -34,7 +34,7 @@ Set the **host**, **database**, **username**, **password**, and **csv location**
 1. **players_table.sql** - creates the **players** table
 2. **games_table.sql** - creates the **games** table
 3. **gamesdetail_table.sql** - creates the **game_details** table
-4. **percentile_rank.sql** - this creates the **column_win_prob_move_one** view and has the query which is used for the first question.
+4. **percentile_rank.sql** - this creates the **column_win_prob_move_one** view. ~~and has the query which is used for the first question.~~
 5. **playerviews.sql** - this creates the **all_games_by_player** view, has a query for question two, then creates the **player_info** view to assist with the final question.
 
 
@@ -47,9 +47,10 @@ python main.py
 1. **main.py** - ties all of the functionality into one last module.
 2. **connections.py** - used to gather the connections, and then is inherited by other classes for logging and holding database connections.
 3. **loadplayer.py** - this is used to load the player data. 
-4. **loadgame.py** - runs a process to get the data that is used for the **games** table.
-5. **loadgamedetails.py** - pulls the detailed game data from the csv to the database.
-6. **player.py** - this is a class that I created that helped me manage the player data.
+4. ~~**loadgame.py** - runs a process to get the data that is used for the **games** table.~~
+5. ~~**loadgamedetails.py** - pulls the detailed game data from the csv to the database.~~
+4. **loadgameNgamedetails.py** - pulls the game and the detailed game data from the csv to the database. *replaces the two scripts above*
+5. **player.py** - this is a class that I created that helped me manage the player data.
 
 
 
@@ -61,10 +62,15 @@ python main.py
    winning the game?
 
 ```sql
-select column_number,
-(percent_rank() OVER win)::numeric(10, 2) as percentile_rank
-FROM column_win_prob_move_one 
-WINDOW win AS (ORDER BY column_number);
+select distinct gt.column_number,
+ROUND(
+(cast(count(*) over(partition by gt.column_number) as decimal )/ cast( count(*) over() as decimal) * 100)
+,4) as percentile,
+count(*) over() as total
+from game_details gt
+join games g on gt.game_id = g.game_id
+where g.result = 'win' and gt.move_number = 1
+order by percentile desc
 ```
 2. How many games has each nationality participated in?
 ```sql
